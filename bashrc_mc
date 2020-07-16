@@ -1,4 +1,0 @@
-#!/bin/bash
-. ${HOME}/.bashrc
-old_ps1=${PS1}
-export PS1="\[${RED}\](mc) ${old_ps1}"

@@ -1,7 +1,0 @@
-# No annoying startup message
-source ~/.screenrc
-split
-screen -t win1
-focus
-screen -t win2
-focus
