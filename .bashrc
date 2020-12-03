@@ -70,14 +70,12 @@ if [ "$color_prompt" = yes ]; then
   else
     PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${GRE}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\@] \[${RED}\]\$(parse_git_branch)\[${GRE}\]$\[${DEF}\] "
   fi
-#    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 else
   if [ "$UID" == 0 ] ; then
     PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W# "
   else
     PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W$ "
   fi
-#    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -120,9 +118,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
+[ -f ~/.bash_aliases ] && . ~/.bash_aliases
 
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
@@ -149,8 +145,5 @@ alias sbash='source ~/.bashrc'
 alias disp='export DISPLAY=:0'
 
 export HISTTIMEFORMAT="%d/%m/%y %T "
-#export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/snap/bin:/sbin:/usr/sbin:/usr/local/sbin"
-export PATH="$GEM_HOME/bin:/usr/local/rvm/bin:$PATH"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+[ -f $HOME/.bashrc.extra ] && . $HOME/.bashrc.extra
