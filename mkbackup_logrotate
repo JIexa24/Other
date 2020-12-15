@@ -1,0 +1,7 @@
+/var/log/mkbackup/mkbackup.log {
+  rotate 14
+  daily
+  missingok
+  notifempty
+}
+
