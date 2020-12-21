@@ -4,6 +4,7 @@ ROOTPWD=/root/backups
 . $ROOTPWD/mkbackup.dat
 if [[ $? != 0 ]]; then exit 1; fi
 
+LOGFILE="$LOGDIR/mkbackup.log"
 if [ ! -d $LOGDIR ] ; then
   mkdir -p -m 775 $LOGDIR
   if [[ $? != 0 ]] ; then
@@ -38,6 +39,7 @@ for ((i = 0; i < ${#BKP[@]}; i+=1)); do
 done
 tar -czf "$BACKUPDIR/backup-$(date --rfc-3339=date).tar.gz" $tempdir >> $LOGFILE 2>&1
 echo "[$(date)] Move backup into $BACKUPDIR/. Code - $?" >> $LOGFILE 2>&1
+cd
 rm -rf $tempdir
 echo "[$(date)] Complete backup. Remove temporary files. Code - $?" >> $LOGFILE 2>&1
 
