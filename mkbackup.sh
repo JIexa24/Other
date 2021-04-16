@@ -1,5 +1,7 @@
 #!/bin/bash
-ROOTPWD=/usr/local/backups
+if [ -z $ROOTPWD ]; then
+  export ROOTPWD=/usr/local/backups
+fi
 
 . $ROOTPWD/mkbackup.dat
 if [[ $? != 0 ]]; then exit 1; fi
@@ -33,9 +35,12 @@ echo "[$(date)] Done." >> $LOGFILE
 tempdir=`mktemp -d`
 cd $tempdir
 echo "[$(date)] Starting backup." >> $LOGFILE
-for ((i = 0; i < ${#BKP[@]}; i+=2)); do
-  tar -czf ${BKP[i+1]}.tar.gz ${BKP[i]}${BKP[i+1]} >> $LOGFILE 2>&1
-  echo "[$(date)] Backup ${BKP[i]} conf. Code - $?" >> $LOGFILE 2>&1
+for ((i = 0; i < ${#BKP[@]}; i+=1)); do
+  f=`echo ${BKP[i]} | tr '/' ' '`
+  f=($f)
+  l=${#f[@]}
+  tar -czf ${f[l-1]}.tar.gz ${BKP[i]} >> $LOGFILE 2>&1
+  echo "[$(date)] Backup ${BKP[i]}. Code - $?" >> $LOGFILE 2>&1
 done
 tar -czf "$BACKUPDIR/backup-$(date --rfc-3339=date).tar.gz" $tempdir >> $LOGFILE 2>&1
 echo "[$(date)] Move backup into $BACKUPDIR/. Code - $?" >> $LOGFILE 2>&1
