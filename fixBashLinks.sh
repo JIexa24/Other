@@ -25,4 +25,3 @@ function createSymlink() {
 
 fixSymlink ${BASE_PATH}/bash/.bashrc ~/.bashrc
 fixSymlink ${BASE_PATH}/bash/bashrc_mc ~/.local/share/mc/bashrc
-fixSymlink ${BASE_PATH}/update-motd.d/99-users-online /etc/update-motd.d/99-users-online
