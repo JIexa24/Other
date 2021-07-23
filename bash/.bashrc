@@ -145,5 +145,6 @@ alias sbash='source ~/.bashrc'
 alias disp='export DISPLAY=:0'
 
 export HISTTIMEFORMAT="%d/%m/%y %T "
+export PROMPT_COMMAND='printf "%%%$((COLUMNS-1))s\\r"'
 
 [ -f $HOME/.bashrc.extra ] && . $HOME/.bashrc.extra
