@@ -64,7 +64,7 @@ then
     if (( $SERVER > 0 ))
     then
       printf "[Info] : It's number. Connect.\n" >&2
-      ssh server-$SERVER.sibnet.ru $* ; printf "\n[$(date)] : Disconnect.\n" >&2
+      ssh server-$SERVER $* ; printf "\n[$(date)] : Disconnect.\n" >&2
       exit 0
     fi
   fi
