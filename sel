@@ -15,7 +15,7 @@ SERVER=$1
 HOME_PATH=/home
 USER=`whoami`
 
-. $HOME_PATH/$USER/.sel
+. ${HOME}/.sel
 if [[ $? != 0 ]]; then exit 1; fi
 
 function valid_ip()
