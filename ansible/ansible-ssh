@@ -120,7 +120,7 @@ if [ -n "${ansible_ssh_private_key_file}" ]; then ssh_args="${ssh_args} -i ${ans
 
 if echo "${ansible_ssh_private_key_file}" | grep -Fq '{{'; then
 ${DEBUG} && echo Parsing jinja template inside ansible_ssh_private_key_file
-var_parsed=$(ansible ${inventory_arg} --connection local -m debug -a "var=ansible_ssh_private_key_file" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_private_key_file )
+var_parsed=$(ansible ${inventory_arg} ${vault_file_arg} --connection local -m debug -a "var=ansible_ssh_private_key_file" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_private_key_file )
 ansible_ssh_private_key_file="${var_parsed}"
 ${DEBUG} && echo "ansible_ssh_private_key_file: ${ansible_ssh_private_key_file}"
 fi
@@ -128,7 +128,7 @@ fi
 
 if echo "${ansible_ssh_args}" | grep -Fq '{{'; then
 ${DEBUG} && echo Parsing jinja template inside ansible_ssh_args
-var_parsed=$(ansible ${inventory_arg} --connection local -m debug -a "var=ansible_ssh_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_args )
+var_parsed=$(ansible ${inventory_arg} ${vault_file_arg} --connection local -m debug -a "var=ansible_ssh_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_args )
 ansible_ssh_args="${var_parsed}"
 ${DEBUG} && echo "ansible_ssh_args: ${ansible_ssh_args}"
 fi
@@ -136,7 +136,7 @@ fi
 
 if echo "${ansible_ssh_common_args}" | grep -Fq '{{'; then
 ${DEBUG} && echo Parsing jinja template inside ansible_ssh_common_args
-var_parsed=$(ansible ${inventory_arg} --connection local -m debug -a "var=ansible_ssh_common_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_common_args )
+var_parsed=$(ansible ${inventory_arg} ${vault_file_arg} --connection local -m debug -a "var=ansible_ssh_common_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_common_args )
 ansible_ssh_common_args="${var_parsed}"
 ${DEBUG} && echo "ansible_ssh_common_args: ${ansible_ssh_common_args}"
 fi
@@ -144,7 +144,7 @@ fi
 
 if echo "${ansible_ssh_extra_args}" | grep -Fq '{{'; then
 ${DEBUG} && echo Parsing jinja template inside ansible_ssh_extra_args
-var_parsed=$(ansible ${inventory_arg} --connection local -m debug -a "var=ansible_ssh_extra_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_extra_args )
+var_parsed=$(ansible ${inventory_arg} ${vault_file_arg} --connection local -m debug -a "var=ansible_ssh_extra_args" ${host} | sed 's/.*SUCCESS => {/{/' | sed 's/\\n/ /' | jq --raw-output .ansible_ssh_extra_args )
 ansible_ssh_extra_args="${var_parsed}"
 ${DEBUG} && echo "ansible_ssh_extra_args: ${ansible_ssh_extra_args}"
 fi
