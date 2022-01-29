@@ -10,16 +10,16 @@ _ansible-ssh()
   pprev=${COMP_WORDS[COMP_CWORD-2]} 
   command=${COMP_WORDS[1]}
   subcommand=${COMP_WORDS[2]}
-  echo
-  echo '-----'
-  echo "current ${current}"
-  echo "prev ${prev}"
-  echo "pprev ${pprev}"
-  echo "command ${command}"
-  echo "subcommand ${subcommand}"
-  echo "COMP_WORDS ${#COMP_WORDS[@]}"
-  echo '-----'
-  echo
+  # echo
+  # echo '-----'
+  # echo "current ${current}"
+  # echo "prev ${prev}"
+  # echo "pprev ${pprev}"
+  # echo "command ${command}"
+  # echo "subcommand ${subcommand}"
+  # echo "COMP_WORDS ${#COMP_WORDS[@]}"
+  # echo '-----'
+  # echo
   case ${prev} in
     ansible-ssh)
       # Inventory file wasn.t specified.
