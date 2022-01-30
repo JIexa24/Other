@@ -39,7 +39,7 @@ _ansible-ssh()
                 return 0
               fi
             ;;
-            6) 
+            5|6) 
               # Spec inventory and vault 
               if [ ! -z ${prev} ]; then
                 COMPREPLY=($(ansible-inventory -i ${subcommand} --vault-password-file ${prev} --list 2>/dev/null | jq --raw-output '.[] | .hosts? | .[]? ' | sort | uniq | grep -E "^${current}"))
