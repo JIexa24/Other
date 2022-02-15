@@ -55,7 +55,7 @@ execution_command_list=("${execution_command_list[@]:1}")
 ${DEBUG} && echo "host: ${host}"
 ${DEBUG} && echo "execution_command_list: ${execution_command_list[@]}"
 
-inventory=$(ansible-inventory ${inventory_arg} --host "${host}")
+inventory=$(ansible-inventory ${inventory_arg} ${vault_file_arg} --host "${host}")
 if [ $? -ne 0 ]; then
     echo "ERROR: ansible inventory failed to gather info on ${host}"
     exit 1
