@@ -139,7 +139,7 @@ if echo "${ansible_ssh_extra_args}" | grep -Fq '{{'; then
     ${DEBUG} && echo "ansible_ssh_extra_args: ${ansible_ssh_extra_args}"
 fi
 
-command="${ssh_executable} ${ansible_user}${ansible_host} ${ssh_args} ${ansible_ssh_args} ${ansible_ssh_common_args} ${ansible_ssh_extra_args} ${execution_command_list[@]}"
+command="${ssh_executable} ${ansible_user}${ansible_host} ${ssh_args} ${ansible_ssh_args} ${ansible_ssh_common_args} ${ansible_ssh_extra_args} -o StrictHostKeyChecking=no ${execution_command_list[@]}"
 ${DEBUG} && echo && echo ssh command: ${command} && echo
 # Multiple exec statements required to prevent quotes inside variables from escaping
 exec sh -c "exec ${command}"
