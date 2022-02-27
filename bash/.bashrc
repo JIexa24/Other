@@ -143,6 +143,8 @@ parse_git_branch() {
 alias l='ls -lahX'
 alias sbash='source ~/.bashrc'
 alias disp='export DISPLAY=:0'
+alias path='echo -e ${PATH//:/\\n}'
+alias cssh='wrap_ssh(){ ssh $*; printf "\n[$(date)] : Disconnect.\n";  unset -f wrap_ssh; }; wrap_ssh'
 
 export HISTTIMEFORMAT="%d/%m/%y %T "
 export PROMPT_COMMAND='printf "%%%$((COLUMNS-1))s\\r"'
