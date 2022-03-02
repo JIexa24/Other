@@ -214,4 +214,12 @@ function ${wrapper_name}() {
 # to call wrap_alias.
 #eval "$(alias -p | grep ${WRAP_ALIAS_FOR?} | sed -e 's/alias \([^=][^=]*\)='\''\([^ ][^ ]*\) *\(.*\)'\''/wrap_alias \1 \2 '\''\3'\'' /')"
 
-[ -f $HOME/.bashrc.extra ] && . $HOME/.bashrc.extra
+# User specific aliases and functions
+if [ -d ${HOME}/.bashrc.d ]; then
+        for rc in ${HOME}/.bashrc.d/*.sh; do
+                if [ -f "$rc" ]; then
+                        . "$rc"
+                fi
+        done
+fi
+unset rc
