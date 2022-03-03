@@ -6,3 +6,5 @@ mkdir -vp ~/.githooks
 cp -v git/hooks/* ~/.githooks/
 cp -vf bash/bashrc_mc ~/.local/share/mc/bashrc
 cp -vf tmux/.tmux.conf ~/.tmux.conf
+mkdir -vp ~/.bashrc.d
+
