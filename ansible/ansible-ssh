@@ -12,19 +12,21 @@ done
 
 # Parse args
 inventory_arg=""
+inventory_path=""
 vault_file_arg=""
 while [ -n "$1" ]; do
     case $1 in
     -i)
         shift
-        inventory_arg="-i $1"
+        inventory_path=${1}
+        inventory_arg="-i ${inventory_path}"
         ;;
     -v)
         shift
-        vault_file_arg="--vault-password-file $1"
+        vault_file_arg="--vault-password-file ${1}"
         ;;
     *)
-        execution_command="${execution_command} $1"
+        execution_command="${execution_command} ${1}"
         ;;
     esac
     shift
@@ -33,6 +35,10 @@ ${DEBUG} && echo "inventory_arg: ${inventory_arg}"
 ${DEBUG} && echo "vault_file_arg: ${vault_file_arg}"
 ${DEBUG} && echo "execution_command: ${execution_command}"
 execution_command_list=($execution_command)
+
+if [ -f "${inventory_path}/.env" ]; then
+  . ${inventory_path}/.env
+fi
 
 if [ ${#execution_command_list[@]} -eq 0 ]; then
     echo "Usage: $(basename $0) [-i INVENTORY] hostname <ssh arguments>"
