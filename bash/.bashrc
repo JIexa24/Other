@@ -89,6 +89,10 @@ xterm*|rxvt*)
     ;;
 esac
 
+if [ ! -z ${MC_TMPDIR} ]; then
+  export PS1="\[${RED}\](mc) ${PS1}"
+fi
+
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
