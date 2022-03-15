@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -v ~/.bashrc ~/.local/share/mc/bashrc ~/.tmux.conf
+rm -vf ~/.bashrc ~/.local/share/mc/bashrc ~/.tmux.conf
 cp -vf bash/.bashrc ~/.bashrc
 mkdir -vp ~/.githooks
 cp -v git/hooks/* ~/.githooks/
