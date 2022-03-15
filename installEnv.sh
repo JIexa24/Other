@@ -6,3 +6,4 @@ cp -v git/hooks/* ~/.githooks/
 cp -vf tmux/.tmux.conf ~/.tmux.conf
 mkdir -vp ~/.bashrc.d
 [ -d "./bash/.bashrc.d" ] && cp -v bash/.bashrc.d/*.sh ~/.bashrc.d
+./git/gitalias.sh
