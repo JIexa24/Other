@@ -9,3 +9,5 @@ cp -vf tmux/.tmux.conf ~/.tmux.conf
 mkdir -vp ~/.bashrc.d
 [ -d "./bash/.bashrc.d" ] && cp -vf bash/.bashrc.d/*.sh ~/.bashrc.d
 ./git/gitalias.sh
+# deprecated
+rm -f ~/.bashrc.d/{ansible,autoenv,aws,go,nvm}.sh
