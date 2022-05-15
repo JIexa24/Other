@@ -1,5 +1,5 @@
 #!/bin/bash
-__VENV_MAX_TREE_LEVELS_UP=10
+__VENV_MAX_TREE_LEVELS_UP=5
 
 function venv_order_priority() {
   echo $1 $1/.venv $1.venv
