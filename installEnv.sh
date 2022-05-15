@@ -1,5 +1,4 @@
 #!/bin/bash
-rm -vf ~/.bashrc ~/.local/share/mc/bashrc ~/.tmux.conf
 cp -vf bash/.bashrc ~/.bashrc
 cp -vf bash/.bash_profile ~/.bash_profile
 cp -vf bash/.profile ~/.profile
