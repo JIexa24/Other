@@ -15,3 +15,7 @@ git config --global alias.cl clone
 git config --global credential.helper store
 
 git config --global core.hooksPath ~/.githooks
+
+git config --global core.eol lf
+git config --global core.autocrlf false
+
