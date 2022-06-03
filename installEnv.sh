@@ -10,5 +10,6 @@ mkdir -vp ~/.bashrc.d
 cp -vf bash/.bashrc.d/*.sh ~/.bashrc.d
 ./git/gitalias.sh
 chmod -v 700 ~
+mkdir -vp ~/.local/{bin,opt,src,etc}
 # deprecated
 rm -fv ~/.bashrc.d/{ansible,autoenv,aws,go,nvm}.sh
