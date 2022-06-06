@@ -1,5 +1,6 @@
 #!/bin/bash
-__VENV_MAX_TREE_LEVELS_UP=10
+__VENV_MAX_TREE_LEVELS_UP=5
+__VENV_NO_AUTO_DEATIVATE=1
 
 function venv_order_priority() {
   echo $1 $1/.venv $1.venv $1/venv
@@ -35,15 +36,23 @@ function venv_print() {
   fi
 }
 
+function venv_no_auto_dectivate() {
+  __VENV_NO_AUTO_DEATIVATE=1
+}
+
+function venv_auto_dectivate() {
+  __VENV_NO_AUTO_DEATIVATE=0
+}
+
 function venv_auto() {
   venv_new="$(venv_find_up)"
   venv_old="$(venv_print)"
   bash_cmd=$(basename $(expr "$BASH_COMMAND" : "\([^ ]*\)"))
 
   if [ -n "$venv_old" -a \( "$bash_cmd" == "mc" -o "$bash_cmd" == "bash" -o "$bash_cmd" == "sh" \) ]; then
-    deactivate
+    [ 0 -eq ${__VENV_NO_AUTO_DEATIVATE} ] && deactivate
   elif [ -z "$venv_new" -a -n "$venv_old" ]; then
-    deactivate
+    [ 0 -eq ${__VENV_NO_AUTO_DEATIVATE} ] && deactivate
   elif [ -n "$venv_new" -a "$venv_new" != "$venv_old" ]; then
     source "$venv_new"/bin/activate
   fi
