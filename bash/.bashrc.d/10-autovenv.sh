@@ -1,7 +1,7 @@
 #!/bin/bash
 unset VIRTUAL_ENV
 __VENV_MAX_TREE_LEVELS_UP=5
-__VENV_NO_AUTO_DEATIVATE=1
+__VENV_NO_AUTO_DEATIVATE=0
 
 function venv_order_priority() {
   echo $1 $1/.venv $1.venv $1/venv
