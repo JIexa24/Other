@@ -48,6 +48,8 @@ function venv_auto_dectivate() {
 function venv_auto() {
   venv_new="$(venv_find_up)"
   venv_old="$(venv_print)"
+  exprs=$(expr "$BASH_COMMAND" : "\([^ ]*\)")
+  if [[ $exprs == "" ]]; then return; fi
   bash_cmd=$(basename $(expr "$BASH_COMMAND" : "\([^ ]*\)"))
 
   if [ -n "$venv_old" -a \( "$bash_cmd" == "mc" -o "$bash_cmd" == "bash" -o "$bash_cmd" == "sh" \) ]; then
