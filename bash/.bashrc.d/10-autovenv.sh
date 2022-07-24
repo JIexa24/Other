@@ -37,15 +37,7 @@ function venv_print() {
   fi
 }
 
-function venv_no_auto_dectivate() {
-  __VENV_NO_AUTO_DEATIVATE=1
-}
-
-function venv_auto_dectivate() {
-  __VENV_NO_AUTO_DEATIVATE=0
-}
-
-function venv_auto() {
+function venv() {
   venv_new="$(venv_find_up)"
   venv_old="$(venv_print)"
   exprs=$(expr "$BASH_COMMAND" : "\([^ ]*\)")
@@ -61,4 +53,4 @@ function venv_auto() {
   fi
 }
 
-trap venv_auto DEBUG
+# trap venv_auto DEBUG
