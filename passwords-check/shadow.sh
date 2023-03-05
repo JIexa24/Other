@@ -26,12 +26,12 @@ for user in ${users[@]}; do
   for pass in ${wordlist[@]} ${user}; do
     if [[ is_md5 == true ]]; then
       if [[ "$(echo -n "${pass}" | md5sum)" = "${userline}" ]]; then
-        echo "User ${user} has password ${pass}!" 1>&2
+        echo "${user}:${pass}" 1>&2
         echo "${user}"
       fi
     fi
     if [[ "$(echo -n "${pass}" | openssl passwd -"${a[1]}" -salt "${a[2]}" -stdin 2>>/dev/null)" = "${userline}" ]]; then
-      echo "User ${user} has password ${pass}!" 1>&2
+      echo "${user}:${pass}" 1>&2
       echo "${user}"
     fi
   done
