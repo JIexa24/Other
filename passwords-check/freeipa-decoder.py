@@ -93,7 +93,7 @@ for line in sys.stdin:
             continue
         for word in wordlist + [user]:
             if verify_password(word.strip(), original_salt, decoded_hash):
-                print(f'{user}:{word}')
+                print(f'{user}:{word.strip()}')
                 break
         # print(f'{user}:{decoded_hash}')
         complete_user = False
