@@ -17,22 +17,17 @@ for user in ${users[@]}; do
   IFS='$'
   a=($userline)
   IFS=$OFS
- # echo "Check user ${user} ${userline} : ${a[1]} ${a[2]}\n" 1>&2
-  echo "Check user ${user}" 1>&2
   is_md5=false
-  if [[ "${a[1]}" == "" && "${a[2]}" == "" ]]; then 
-    # continue; 
+  if [[ "${a[1]}" == "" && "${a[2]}" == "" ]]; then
     a[1]=1
     a[2]=${userline}
     is_md5=true
   fi
   for pass in ${wordlist[@]} ${user}; do
-#    echo -n "${pass}" | openssl passwd -"${a[1]}" -salt "${a[2]}" -stdin
-#    echo ${userline}
     if [[ is_md5 == true ]]; then
-      if [[ "$(echo -n "${pass}" | md5sum)" = "${userline}" ]]; then                                                                                                                     
-        echo "User ${user} has password ${pass}!" 1>&2                                                                                                                                                                                        
-        echo "${user}"                                                                                                                                                                                                                        
+      if [[ "$(echo -n "${pass}" | md5sum)" = "${userline}" ]]; then
+        echo "User ${user} has password ${pass}!" 1>&2
+        echo "${user}"
       fi
     fi
     if [[ "$(echo -n "${pass}" | openssl passwd -"${a[1]}" -salt "${a[2]}" -stdin 2>>/dev/null)" = "${userline}" ]]; then
@@ -41,4 +36,3 @@ for user in ${users[@]}; do
     fi
   done
 done
-
