@@ -20,13 +20,15 @@ git config --global core.hooksPath ~/.githooks
 git config --global core.eol lf
 git config --global core.autocrlf false
 
-git config --global gpg.format ssh
+#git config --global gpg.format ssh
+#git config --global commit.gpgsign true
+# gpg --full-generate-key --expert
 # Change if use includeIf on include configs
 #
 #[user]
 #        email =
 #        name =
-#        signingkey = pathtokey
-git config --global user.signingkey ~/.ssh/keys/github-self.key
+#        signingkey = key-id
+#git config --global user.signingkey ~/.ssh/keys/github-self.key
 git config --global gpg.ssh.allowedSignersFile "${HOME}/ssh/allowed_signers"
 
