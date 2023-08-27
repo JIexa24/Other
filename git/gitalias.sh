@@ -21,7 +21,7 @@ git config --global core.eol lf
 git config --global core.autocrlf false
 
 #git config --global gpg.format ssh
-#git config --global commit.gpgsign true
+git config --global commit.gpgsign true
 # gpg --full-generate-key --expert
 # Change if use includeIf on include configs
 #
