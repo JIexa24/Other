@@ -66,16 +66,12 @@ fi
 
 if [ "$color_prompt" = yes ]; then
   if [ "$UID" == 0 ] ; then
-    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${RED}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\@] \[${RED}\]\$(parse_git_branch)\[${RED}\]#\[${DEF}\] "
+    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${RED}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\A] \[${RED}\]\$(parse_git_branch)\[${RED}\]#\[${DEF}\] "
   else
-    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${GRE}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\@] \[${RED}\]\$(parse_git_branch)\[${GRE}\]$\[${DEF}\] "
+    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${GRE}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\A] \[${RED}\]\$(parse_git_branch)\[${GRE}\]$\[${DEF}\] "
   fi
 else
-  if [ "$UID" == 0 ] ; then
-    PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W# "
-  else
-    PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W$ "
-  fi
+    PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W\$ "
 fi
 unset color_prompt force_color_prompt
 
