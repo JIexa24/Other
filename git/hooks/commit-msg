@@ -14,7 +14,7 @@ types='|'.join(['build', 'docs', 'feat', 'fix', 'hotfix', 'perf', 'refactor', 's
 validate_regex = r"^[.0-9]+$|^([Rr]evert|[Mm]erge):? .*$|^(" + types + ")(\(.+\))?: "
 error_msg = "Commit message format must match regex " + validate_regex
 
-with open(commit_msg_filepath, "r+") as file:
+with open(commit_msg_filepath, "r+", encoding='utf-8') as file:
     commit_msg = file.read()
     if re.search(validate_regex, commit_msg):
         print(green_color + "Good Commit!" + color_off)
