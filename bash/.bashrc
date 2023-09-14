@@ -1,4 +1,4 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
+\# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -8,12 +8,14 @@ case $- in
       *) return;;
 esac
 
-RED="\033[1;31m"
-GRE="\033[1;32m"
-YEL="\033[1;33m"
-BLU="\033[1;34m"
-LBL="\033[1;36m"
-DEF="\033[1;00m"
+RED="\033[0;31m"
+REDB="\033[1;31m"
+GRE="\033[0;32m"
+YEL="\033[0;33m"
+BLU="\033[0;34m"
+LBL="\033[0;36m"
+DEF="\033[0;00m"
+DEFI="\033[3;37m"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
@@ -64,6 +66,12 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
+#if [ "$color_prompt" = yes ]; then
+#    PS1="[\u@\h \A \[${DEFI}\]\W\[${DEF}\] ] \[${REDB}\]\$(parse_git_branch)\[${DEF}\]\$ "
+#else
+#    PS1="[\u@\h \W]\$ "
+#fi
+
 if [ "$color_prompt" = yes ]; then
   if [ "$UID" == 0 ] ; then
     PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${RED}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\A] \[${RED}\]\$(parse_git_branch)\[${RED}\]#\[${DEF}\] "
@@ -86,7 +94,7 @@ xterm*|rxvt*)
 esac
 
 if [ ! -z ${MC_TMPDIR} ]; then
-  export PS1="\[${RED}\](mc) ${PS1}"
+  export PS1="\[${REDB}\](mc) \[${DEF}\]${PS1}"
 fi
 
 # enable color support of ls and also add handy aliases
