@@ -10,8 +10,10 @@ blue_color = "\033[1;34m"
 yellow_color = "\033[1;33m"
 
 commit_msg_filepath = sys.argv[1]
-types='|'.join(['build', 'docs', 'feat', 'fix', 'hotfix', 'perf', 'refactor', 'style', 'test', 'chore'])
-validate_regex = r"^[.0-9]+$|^([Rr]evert|[Mm]erge):? .*$|^(" + types + ")(\(.+\))?: "
+types='|'.join(['build', 'ci', '[Rr]evert', '[Mm]erge', 'docs', 'feat', 'fix', 'hotfix', 'perf', 'refactor', 'style', 'test', 'chore'])
+validate_regex = r"^([Rr]evert|[Mm]erge):? ([\w ])+([\s\S]*)|^(" + types + "){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*)"
+
+
 error_msg = "Commit message format must match regex " + validate_regex
 
 with open(commit_msg_filepath, "r+", encoding='utf-8') as file:
