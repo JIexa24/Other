@@ -69,7 +69,7 @@ fi
 if [ "$color_prompt" = yes ]; then
     PS1="[\u@\h \A \[${DEFI}\]\W\[${DEF}\] ] \[${REDB}\]\$(parse_git_branch)\[${DEF}\]\$ "
 else
-    PS1="[\u@\h \W]\$ "
+    PS1="[\u@\h \W] \$(parse_git_branch)\$ "
 fi
 unset color_prompt force_color_prompt
 
@@ -84,8 +84,14 @@ xterm*|rxvt*)
 esac
 
 if [ ! -z ${MC_TMPDIR} ]; then
-  export PS1="\[${REDB}\](mc) \[${DEF}\]${PS1}"
+  if [ "$color_prompt" = yes ]; then
+    PS1="\[${REDB}\](mc) \[${DEF}\]${PS1}"
+  else
+    PS1="(mc) ${PS1}"
+  fi
 fi
+
+export PS1
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
