@@ -1,4 +1,4 @@
-\# ~/.bashrc: executed by bash(1) for non-login shells.
+# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
@@ -66,20 +66,10 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-#if [ "$color_prompt" = yes ]; then
-#    PS1="[\u@\h \A \[${DEFI}\]\W\[${DEF}\] ] \[${REDB}\]\$(parse_git_branch)\[${DEF}\]\$ "
-#else
-#    PS1="[\u@\h \W]\$ "
-#fi
-
 if [ "$color_prompt" = yes ]; then
-  if [ "$UID" == 0 ] ; then
-    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${RED}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\A] \[${RED}\]\$(parse_git_branch)\[${RED}\]#\[${DEF}\] "
-  else
-    PS1="\[${DEF}\]${debian_chroot:+($debian_chroot)}\[${GRE}\]\u\[${DEF}\]@\[${BLU}\]\h\[${YEL}\]:\[${LBL}\]\W \[${YEL}\][\A] \[${RED}\]\$(parse_git_branch)\[${GRE}\]$\[${DEF}\] "
-  fi
+    PS1="[\u@\h \A \[${DEFI}\]\W\[${DEF}\] ] \[${REDB}\]\$(parse_git_branch)\[${DEF}\]\$ "
 else
-    PS1="${debian_chroot:+($debian_chroot)}\u@\h:\W\$ "
+    PS1="[\u@\h \W]\$ "
 fi
 unset color_prompt force_color_prompt
 
