@@ -13,6 +13,8 @@ git config --global alias.cf config
 git config --global alias.ad add
 git config --global alias.cl clone
 
+git config --global push.autoSetupRemote true
+
 #git config --global credential.helper cache --timeout 60000
 git config --global credential.helper store
 
