@@ -1,2 +1,2 @@
 #!/bin/bash
-export GOPATH=${HOME}/go
+export GOPATH=${HOME}/.local/go
