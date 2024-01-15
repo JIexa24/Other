@@ -9,28 +9,36 @@
 #umask 022
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+if [ -n "${BASH_VERSION}" ]; then
+  # include .bashrc if it exists
+  if [ -f "${HOME}/.bashrc" ]; then
+    . "${HOME}/.bashrc"
+  fi
 fi
 
 # set PATH so it includes user's go bin if it exists
-if [ -d "/usr/local/go/bin" ] ; then
-    PATH="/usr/local/go/bin:$PATH"
+if [ -d "/usr/local/go/bin" ]; then
+  if [[ ! ${PATH} =~ "/usr/local/go/bin" ]]; then
+    PATH="/usr/local/go/bin:${PATH}"
+  fi
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
+if [ -d "${HOME}/bin" ]; then
+  if [[ ! ${PATH} =~ "${HOME}/bin" ]]; then
+    PATH="${HOME}/bin:${PATH}"
+  fi
 fi
 
 # set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
+if [ -d "${HOME}/.local/bin" ]; then
+  if [[ ! ${PATH} =~ "${HOME}/.local/bin" ]]; then
+    PATH="${HOME}/.local/bin:${PATH}"
+  fi
 fi
 
-if [ -d "$HOME/go/bin" ] ; then
-    PATH="$HOME/go/bin:$PATH"
+if [ -d "${HOME}/go/bin" ]; then
+  if [[ ! ${PATH} =~ "${HOME}/go/bin" ]]; then
+    PATH="${HOME}/go/bin:${PATH}"
+  fi
 fi
