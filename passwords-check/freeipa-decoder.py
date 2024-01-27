@@ -1,4 +1,10 @@
 #!/usr/bin/env python3
+#pylint: disable=invalid-name
+"""
+Module for extract password.s hash from freeipa entry and 
+comare hash with wordlist hashes. 
+"""
+
 import base64
 import re
 import sys
