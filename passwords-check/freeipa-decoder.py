@@ -6,57 +6,62 @@ import hashlib
 import secrets
 
 
-def hash_password(password, salt=None, iterations=260000):
-    if salt is None:
-        salt = secrets.token_hex(16)
+def hash_password(password, pwd_type, pw_salt=None, iterations_cnt=260000):
+    """Get password hash"""
+    if pw_salt is None:
+        pw_salt = secrets.token_hex(16)
     pw_hash = hashlib.pbkdf2_hmac(
-        "sha256", password.encode("utf-8"), salt, iterations
+        pwd_type, password.encode("utf-8"), pw_salt, iterations_cnt
     )
-    b64_hash = base64.b64encode(
+    encoded_pw_hash = base64.b64encode(
         pw_hash, altchars=b'./').decode('utf-8').rstrip('=')
-    salt = base64.b64encode(
-        original_salt, altchars=b'./').decode('utf-8').rstrip('=')
-    return "{}${}${}${}".format("pbkdf2_sha256", iterations, salt, b64_hash)
+    encoded_salt = base64.b64encode(
+        pw_salt, altchars=b'./').decode('utf-8').rstrip('=')
+    return f"pbkdf2_{pwd_type}${iterations_cnt}${encoded_salt}${encoded_pw_hash}"
 
 
-def verify_password(password, original_salt, password_hash):
-    if (password_hash or "").count("$") != 3:
+def verify_password(password, pwd_type, original_pw_salt, password_hash):
+    """Check password string with hash"""
+    if (password_hash or "").count("$") != 3 or not pw_type:
         return False
-    algorithm, iterations, salt, b64_hash = password_hash.split("$", 3)
-    iterations = int(iterations)
-    compare_hash = hash_password(password, original_salt, iterations)
+    _, iterations_cnt, _, _ = password_hash.split("$", 3)
+    iterations_cnt = int(iterations_cnt)
+    compare_hash = hash_password(password, pwd_type, original_pw_salt, iterations_cnt)
     # print(f"! {word} {compare_hash} {password_hash}")
     return secrets.compare_digest(password_hash, compare_hash)
 
-
+# pylint: disable=invalid-name
 next_line = False
+# pylint: disable=invalid-name
 user = ''
+# pylint: disable=invalid-name
 nt_hash = ''
+# pylint: disable=invalid-name
 complete_user = False
 
 for line in sys.stdin:
     line = line.strip()
 
-    m = re.match('^\s+id [0-9]+$', line)
+    m = re.match(r'^\s+id [0-9]+$', line)
     if m:
         user = ''
         nt_hash = ''
 
     if not user:
-        m = re.match('^\s*uid: (.*)$', line)
+        m = re.match(r'^\s*uid: (.*)$', line)
         if m:
             user = m.group(1)
             encoded_hash = ''
 
     # Extract password hash
-    m = re.match('userPassword:: ([a-z0-9\+/=]+)', line, re.IGNORECASE)
+    m = re.match(r'userPassword:: ([a-z0-9\+/=]+)', line, re.IGNORECASE)
     if m:
         encoded_hash = m.group(1)
         next_line = True
 
     # Hash is usually split across multiple lines
-    elif next_line == True:
-        m = re.match('^\s*([a-z0-9\+/=]+)$', line, re.IGNORECASE)
+    elif next_line:
+        m = re.match(r'^\s*([a-z0-9\+/=]+)$', line, re.IGNORECASE)
         if m:
             encoded_hash += m.group(1).strip()
         else:
@@ -65,8 +70,9 @@ for line in sys.stdin:
     original_salt = None
     if complete_user:
         decoded_hash = base64.b64decode(encoded_hash).decode('utf-8')
-
+        pw_type = ''
         if '{PBKDF2_SHA256}' in decoded_hash:
+            pw_type = 'sha256'
             binary_hash = base64.b64decode(decoded_hash[15:])
             iterations = int.from_bytes(binary_hash[0:4], byteorder='big')
 
@@ -74,25 +80,29 @@ for line in sys.stdin:
             original_salt = binary_hash[4:68]
             salt = base64.b64encode(
                 original_salt, altchars=b'./').decode('utf-8').rstrip('=')
-            # 389-ds specifies an ouput (dkLen) length of 256 bytes, which is longer than John supports
+            # 389-ds specifies an ouput (dkLen) length of 256 bytes,
+            # which is longer than John supports
             # However, we can truncate this to 32 bytes and crack those
             b64_hash = base64.b64encode(
                 binary_hash[68:100], altchars=b'./').decode('utf-8').rstrip('=')
 
             # Formatted for John
-            decoded_hash = f"pbkdf2_sha256${iterations}${salt}${b64_hash}"
-
+            decoded_hash = f"pbkdf2_{pw_type}${iterations}${salt}${b64_hash}"
+        elif '{PBKDF2_SHA512}' in decoded_hash:
+            pw_type = '' # Now it unsupported
+            # pw_type = 'sha512'
+            
         wordlist = []
         try:
-            with open('wordlist') as f:
+            with open('wordlist', encoding='utf-8') as f:
                 wordlist = f.readlines()
         except FileNotFoundError:
-            print(f"File wordlist does not exist.")
+            print("File wordlist does not exist.")
             wordlist = ['userpassword']
-        except:
+        except: # pylint: disable=bare-except
             continue
         for word in wordlist + [user]:
-            if verify_password(word.strip(), original_salt, decoded_hash):
+            if verify_password(word.strip(), pw_type, original_salt, decoded_hash):
                 print(f'{user}:{word.strip()}')
                 break
         # print(f'{user}:{decoded_hash}')
