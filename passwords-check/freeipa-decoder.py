@@ -6,11 +6,13 @@ comare hash with wordlist hashes.
 """
 
 import base64
+import logging
 import re
 import sys
 import hashlib
 import secrets
 
+logging.basicConfig(level=logging.INFO)
 
 def hash_password(password, pwd_type, pw_salt=None, iterations_cnt=260000):
     """Get password hash"""
@@ -46,6 +48,15 @@ def verify_password(password, pwd_type, original_pw_salt, password_hash):
     # print(f"! {word} {compare_hash} {password_hash}")
     return secrets.compare_digest(password_hash, compare_hash)
 
+wordlist = []
+try:
+    with open('wordlist', encoding='utf-8') as f:
+        wordlist = f.readlines()
+except FileNotFoundError:
+    print("File wordlist does not exist.")
+    wordlist = ['userpassword']
+except:  # pylint: disable=bare-except
+    exit(1)
 
 # pylint: disable=invalid-name
 next_line = False
@@ -119,17 +130,10 @@ for line in sys.stdin:
             #     b64_hash = b64_hash.replace(rchar, '+')
             decoded_hash = f"pbkdf2_{pw_type}${iterations}${salt}${b64_hash}"
 
-        wordlist = []
-        try:
-            with open('wordlist', encoding='utf-8') as f:
-                wordlist = f.readlines()
-        except FileNotFoundError:
-            print("File wordlist does not exist.")
-            wordlist = ['userpassword']
-        except:  # pylint: disable=bare-except
-            continue
+        logging.info("Check passwords for user %s", user)
         for word in wordlist + [user]:
             if verify_password(word.strip(), pw_type, original_salt, decoded_hash):
+                logging.warning("User %s has password %s !", user, word.strip())
                 print(f'{user}:{word.strip()}')
                 break
         # print(f'{user}:{decoded_hash}')
