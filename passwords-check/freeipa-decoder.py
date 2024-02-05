@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-#pylint: disable=invalid-name
+# pylint: disable=invalid-name
 """
 Module for extract password.s hash from freeipa entry and 
 comare hash with wordlist hashes. 
@@ -133,7 +133,8 @@ for line in sys.stdin:
         logging.info("Check passwords for user %s", user)
         for word in wordlist + [user]:
             if verify_password(word.strip(), pw_type, original_salt, decoded_hash):
-                logging.warning("User %s has password %s !", user, word.strip())
+                logging.warning("User %s has password %s !",
+                                user, word.strip())
                 print(f'{user}:{word.strip()}')
                 break
         # print(f'{user}:{decoded_hash}')
