@@ -11,7 +11,7 @@ yellow_color = "\033[1;33m"
 
 commit_msg_filepath = sys.argv[1]
 types='|'.join(['build', 'ci', '[Rr]evert', '[Mm]erge', 'docs', 'feat', 'fix', 'hotfix', 'perf', 'refactor', 'style', 'test', 'chore'])
-validate_regex = r"^([Rr]evert|[Mm]erge):? ([\w ])+([\s\S]*)|^(" + types + "){1}(\\([\w\-\.]+\\))?(!)?: ([\w ])+([\s\S]*)"
+validate_regex = r'^([Rr]evert|[Mm]erge):? ([\w ])+([\s\S]*)|^(' + types + '){1}(\([\w\-\.]+\))?(!)?: ([\w ])+([\s\S]*)'
 
 error_msg = "Commit message format must match regex " + validate_regex
 
