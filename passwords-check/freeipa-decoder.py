@@ -131,7 +131,7 @@ for line in sys.stdin:
             decoded_hash = f"pbkdf2_{pw_type}${iterations}${salt}${b64_hash}"
 
         logging.info("Check passwords for user %s", user)
-        for word in wordlist + [user]:
+        for word in [user] + wordlist:
             if verify_password(word.strip(), pw_type, original_salt, decoded_hash):
                 logging.warning("User %s has password %s !",
                                 user, word.strip())
