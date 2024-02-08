@@ -27,4 +27,9 @@ if [ -z ${HOST} ]; then
   exit 1
 fi
 
-ldapsearch -H "${HOST}" -D "${BIND_USER}" -b "${BASE_DN}" -W "(&(!(nsaccountlock=TRUE))(${FILTER}))" uid userPassword
+filterString="(!(nsaccountlock=TRUE))"
+if [ -n "${FILTER}" ]; then
+  filterString="(&(!(nsaccountlock=TRUE))(${FILTER}))"
+fi
+
+ldapsearch -H "${HOST}" -D "${BIND_USER}" -b "${BASE_DN}" -W "${filterString}" uid userPassword
