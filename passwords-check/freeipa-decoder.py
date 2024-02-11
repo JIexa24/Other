@@ -49,6 +49,7 @@ def verify_password(password, pwd_type, original_pw_salt, password_hash):
     return secrets.compare_digest(password_hash, compare_hash)
 
 wordlist = []
+iteration = 1
 try:
     with open('wordlist', encoding='utf-8') as f:
         wordlist = f.readlines()
@@ -130,7 +131,7 @@ for line in sys.stdin:
             #     b64_hash = b64_hash.replace(rchar, '+')
             decoded_hash = f"pbkdf2_{pw_type}${iterations}${salt}${b64_hash}"
 
-        logging.info("Check passwords for user %s", user)
+        logging.info("[%d] Check passwords for user %s", iteration, user)
         for word in [user] + wordlist:
             if verify_password(word.strip(), pw_type, original_salt, decoded_hash):
                 logging.warning("User %s has password %s !",
@@ -141,3 +142,4 @@ for line in sys.stdin:
         complete_user = False
         user = ''
         nt_hash = ''
+        iteration = iteration + 1
