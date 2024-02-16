@@ -188,7 +188,7 @@ class IPAPasswordChecker:
 
         # FIXME: get dynamic workers count
         with ThreadPoolExecutor(max_workers=4) as executor:
-            # Schedule the API calls with different geo_ids
+            # Schedule the API calls with different users
             futures = [
                 executor.submit(
                     self.check_password, u['username'], u['password']
