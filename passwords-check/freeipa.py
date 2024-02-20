@@ -38,6 +38,8 @@ class IPAPasswordChecker:
         self.ldap_passwords_file = ldap_passwords_file_env if ldap_passwords_file_env else 'wordlist'
 
         self.wordlist = []
+        
+        logging.error("Loading file %s", self.ldap_passwords_file)
         try:
             with open(self.ldap_passwords_file, encoding='utf-8') as f:
                 self.wordlist = f.readlines()
