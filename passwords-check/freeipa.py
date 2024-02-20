@@ -34,14 +34,16 @@ class IPAPasswordChecker:
         self.ldap_password = ldap_password_env if ldap_password_env else ''
         ldap_filter_env = os.getenv('LDAP_FILTER')
         self.ldap_filter = ldap_filter_env if ldap_filter_env else ''
+        ldap_passwords_file_env = os.getenv('LDAP_PASSWORDS_FILE')
+        self.ldap_passwords_file = ldap_passwords_file_env if ldap_passwords_file_env else 'wordlist'
 
         self.wordlist = []
         try:
-            with open('wordlist', encoding='utf-8') as f:
+            with open(self.ldap_passwords_file, encoding='utf-8') as f:
                 self.wordlist = f.readlines()
         except FileNotFoundError:
             logging.warning(
-                "File wordlist does not exist. Fallback to one default password.")
+                "File %s does not exist. Fallback to one default password.", self.ldap_passwords_file)
             self.wordlist = ['userpassword']
         except:  # pylint: disable=bare-except
             exit(1)
@@ -49,7 +51,7 @@ class IPAPasswordChecker:
         # pylint: disable=invalid-name
         self.ldap_obj = None
         # Check only account which password expired somethere in the future
-        date_expiration = datetime.datetime.now()# - datetime.timedelta(weeks=1)
+        date_expiration = datetime.datetime.now() # - datetime.timedelta(weeks=1)
         password_expiration_border_date = date_expiration.strftime(
             "%Y%m%d%H%M%SZ")
         self.user_filter = f"(&(!(nsaccountlock=TRUE))(krbPasswordExpiration>={password_expiration_border_date}))"
