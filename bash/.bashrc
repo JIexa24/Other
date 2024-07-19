@@ -25,8 +25,8 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=100000000
-HISTFILESIZE=200000000
+HISTSIZE=100000
+HISTFILESIZE=200000
 HISTFILE=~/.bash_history
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -217,7 +217,6 @@ function ${wrapper_name}() {
 # to call wrap_alias.
 #eval "$(alias -p | grep ${WRAP_ALIAS_FOR?} | sed -e 's/alias \([^=][^=]*\)='\''\([^ ][^ ]*\) *\(.*\)'\''/wrap_alias \1 \2 '\''\3'\'' /')"
 
-
 # User specific aliases and functions
 if [ -d ${HOME}/.bashrc.d ]; then
         for rc in ${HOME}/.bashrc.d/*.sh; do
@@ -226,4 +225,5 @@ if [ -d ${HOME}/.bashrc.d ]; then
                 fi
         done
 fi
+
 unset rc
