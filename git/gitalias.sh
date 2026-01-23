@@ -10,7 +10,7 @@ git config --global alias.pl pull
 git config --global alias.ft fetch
 git config --global alias.mg merge
 git config --global alias.mgs "merge -S --signoff"
-git config --global alias.tgs "!f() { git tag --sign -am \"${1}\" \"${1}\"; }; f"
+git config --global alias.tgs '!f() { git tag --sign -am "${1}" "${1}"; }; f'
 git config --global alias.cf config
 git config --global alias.ad add
 git config --global alias.cl clone
