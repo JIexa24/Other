@@ -1,39 +1,51 @@
-git config --global alias.co checkout
-git config --global alias.cm "commit -m"
-git config --global alias.cs "commit -S --signoff"
-git config --global alias.csm "commit -S --signoff -m"
-git config --global alias.st status
-git config --global alias.br branch
-git config --global alias.hist "log --pretty=format:'%C(cyan)%h%Creset %ad | %s%C(cyan)%d%Creset [%C(bold blue)%an|%ae%Creset] %C(green)(%cr)%Creset [%C(cyan)%G?%Creset] %C(cyan)%GS%Creset' --graph --date=local --all"
-git config --global alias.ps push
-git config --global alias.pl pull
-git config --global alias.ft fetch
-git config --global alias.mg merge
-git config --global alias.mgs "merge -S --signoff"
-git config --global alias.tgs '!f() { git tag --sign -am "${1}" "${1}"; }; f'
-git config --global alias.cf config
-git config --global alias.ad add
-git config --global alias.cl clone
+git config set --global alias.co checkout
+git config set --global alias.cm "commit -m"
+git config set --global alias.cs "commit -S --signoff"
+git config set --global alias.csm "commit -S --signoff -m"
+git config set --global alias.st status
+git config set --global alias.br branch
+git config set --global alias.hist "log --pretty=format:'%C(cyan)%h%Creset %ad | %s%C(cyan)%d%Creset [%C(bold blue)%an|%ae%Creset] %C(green)(%cr)%Creset [%C(cyan)%G?%Creset] %C(cyan)%GS%Creset' --graph --date=local --all"
+git config set --global alias.ps push
+git config set --global alias.pl pull
+git config set --global alias.ft fetch
+git config set --global alias.mg merge
+git config set --global alias.mgs "merge -S --signoff"
+git config set --global alias.tgs '!f() { git tag --sign -am "${1}" "${1}"; }; f'
+git config set --global alias.cf config
+git config set --global alias.ad add
+git config set --global alias.cl clone
 
-git config --global push.autoSetupRemote true
+git config set --global push.autoSetupRemote true
 
-#git config --global credential.helper cache --timeout 60000
-git config --global credential.helper store
+# Credential helper setup
+# git config --global credential.helper cache --timeout 60000
+git config set --global credential.helper store
 
-git config --global core.hooksPath ~/.githooks
+# Хуки
+# git config --global core.hooksPath ~/.githooks
+git config set --global hook."conventional-commit-msg".enabled true
+git config set --global hook."conventional-commit-msg".event "commit-msg"
+git config set --global hook."conventional-commit-msg".command "~/.githooks/conventional-commit"
+git config set --global hook."pre-commit".enabled true
+git config set --global hook."pre-commit".event "pre-commit"
+git config set --global hook."pre-commit".command "~/.githooks/pre-commit-app"
 
-git config --global core.eol lf
-git config --global core.autocrlf false
+# Символы конца строки
+git config set --global core.eol lf
+git config set --global core.autocrlf false
 
-#git config --global gpg.format ssh
+# Подпись коммитов
+# git config --global gpg.format ssh
 git config --global commit.gpgsign true
 # gpg --full-generate-key --expert
-# Change if use includeIf on include configs
-#
+
 #[user]
 #        email =
 #        name =
 #        signingkey = key-id
-#git config --global user.signingkey ~/.ssh/keys/github-self.key
-git config --global gpg.ssh.allowedSignersFile "${HOME}/ssh/allowed_signers"
+
+# git config --global user.signingkey ~/.ssh/keys/github-self.key
+
+# Для подписи через ssh ключи
+git config set --global gpg.ssh.allowedSignersFile "${HOME}/ssh/allowed_signers"
 

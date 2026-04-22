@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+ARGS=(hook-impl --config=.pre-commit-config.yaml --hook-type=pre-commit)
+
+HERE="$(cd "$(dirname "$0")" && pwd)"
+ARGS+=(--hook-dir "$HERE" -- "$@")
+
+python -c "import pre_commit" &> /dev/null
+if [ $? -ne 0 ]; then
+    echo "No module named pre_commit. Install pre-commit to use pre-commit-app hook."
+    exit 0
+fi
+
+export PRE_COMMIT_ALLOW_NO_CONFIG=1=1
+if command -v pre-commit > /dev/null; then
+    exec pre-commit "${ARGS[@]}"
+else
+    echo '`pre-commit` not found.  Did you forget to activate your virtualenv?' 1>&2
+    exit 1
+fi
+
+exit 0
